@@ -8,15 +8,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class ServiceProvider extends Controller{
-    public function index(Request $request)
+    public function index(Request $request): \Illuminate\Contracts\View\View|\Illuminate\Http\JsonResponse
     {
-
-        $query = ServiceProviders::with('category')->select(['id', 'name', 'description', 'logo', 'category_id']);
-        if ($request->filled('category')) {
-            $query->whereHas('category', fn($q) => $q->where('id', $request->category));
-        }
-
-        $providers = $query->paginate(25);
+        $providers = ServiceProviders::with('category')
+            ->when($request->filled('category'), fn($q) =>
+                $q->where('category_id', $request->category)
+            )
+            ->paginate(25);
 
         // If AJAX, return JSON only
         if ($request->ajax()) {
@@ -25,8 +23,8 @@ class ServiceProvider extends Controller{
             ]);
         }
 
-        // Cache categories (some optimizations since this is the focus)
-        $categories = Cache::remember('provider_categories', 60, function () {
+        // Cache categories (some optimizations since this is the focus), added cache tags for flushing
+        $categories = Cache::tags(['providers'])->remember('provider:categories', 30, function () {
             return Category::all();
         });
 
