@@ -5,7 +5,7 @@
     <div class="container">
         <div class="card mx-auto" style="max-width: 600px;">
             <div class="card-body text-center">
-                <img src="{{ $provider->logo }}" width="120" height="120" loading="lazy" alt="{{ $provider->name }} logo" class="img-thumbnail mb-3" style="max-width: 120px;">
+                <img src="{{ $provider->logo }}" width="71" height="71" loading="lazy" alt="{{ $provider->name }} logo" class="img-thumbnail mb-3" style="max-width: 120px; aspect-ratio: 1/1;">
 
                 <h2 class="card-title">{{ $provider->name }}</h2>
 

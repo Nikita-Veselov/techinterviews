@@ -14,7 +14,7 @@ class ServiceProvidersFactory extends Factory
         return [
             'name' => $this->faker->company,
             'description' => $this->faker->paragraph,
-            'logo' => 'https://ui-avatars.com/api/?name=' . urlencode($this->faker->company) . '&background=random',
+            'logo' => 'https://ui-avatars.com/api/?name=' . urlencode($this->faker->company) . '&size=128&background=random',
             'category_id' => Category::inRandomOrder()->first()?->id ?? 1,
         ];
     }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     {{-- Lighthouse optimisations --}}
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])

@@ -11,7 +11,7 @@
     @forelse($providers as $provider)
         <tr>
             {{-- Img optimization --}}
-            <td><img src="{{ $provider->logo }}" alt="{{ $provider->name }} logo" width="120" height="120" loading="lazy" class="img-thumbnail"></td>
+            <td><img src="{{ $provider->logo }}" alt="{{ $provider->name }} logo" width="71" height="71" loading="lazy" class="img-thumbnail"></td>
             <td><a href="{{ route('providers.show', $provider->id) }}">{{ $provider->name }}</a></td>
             <td>{{ $provider->description }}</td>
             <td>{{ $provider->category->name ?? '-' }}</td>

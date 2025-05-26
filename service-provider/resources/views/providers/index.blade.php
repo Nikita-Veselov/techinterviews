@@ -6,7 +6,8 @@
 
         <!-- Filter -->
         <form method="GET" action="{{ route('providers.index') }}" class="mb-3">
-            <select id="categoryFilter" class="form-select w-auto d-inline-block mb-3">
+            <label for="categoryFilter" class="form-label me-2">Filter by Category:</label>
+            <select id="categoryFilter" class="form-select w-auto d-inline-block mb-3" aria-label="Category Filter">
                 <option value="">All Categories</option>
                 @foreach($categories as $category)
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
