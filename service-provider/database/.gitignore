@@ -1,1 +1,3 @@
-*.sqlite*
+# Preseeded DB
+/database/**/*.sqlite
+!database/database.sqlite
