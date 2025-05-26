@@ -20,8 +20,6 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Support'],
         ]);
 
-        \App\Models\ServiceProviders::factory()->count(100)->create();
-
-        $this->call(ServiceProvidersSeeder::class);
+        \App\Models\ServiceProviders::factory()->count(10000)->create();
     }
 }

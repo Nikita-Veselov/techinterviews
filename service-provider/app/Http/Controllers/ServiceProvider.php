@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\ServiceProviders;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+
 class ServiceProvider extends Controller{
     public function index(Request $request)
     {
 
-        $query = ServiceProviders::with('category');
-
+        $query = ServiceProviders::with('category')->select(['id', 'name', 'description', 'logo', 'category_id']);
         if ($request->filled('category')) {
             $query->whereHas('category', fn($q) => $q->where('id', $request->category));
         }
@@ -24,15 +25,16 @@ class ServiceProvider extends Controller{
             ]);
         }
 
-        $categories = Category::all();
+        // Cache categories (some optimizations since this is the focus)
+        $categories = Cache::remember('provider_categories', 60, function () {
+            return Category::all();
+        });
 
         return view('providers.index', compact('providers', 'categories'));
     }
 
-    public function show($id)
+    public function show(ServiceProviders $provider)
     {
-        $provider = ServiceProviders::findOrFail($id);
-
         return view('providers.show', compact('provider'));
     }
 }

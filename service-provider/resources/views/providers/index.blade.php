@@ -17,34 +17,33 @@
                 @include('providers.partials.table', ['providers' => $providers])
             </div>
         </form>
+    </div>
 
-        <script>
-            document.getElementById('categoryFilter').addEventListener('change', function () {
-                const category = this.value;
+    <script>
+        document.getElementById('categoryFilter').addEventListener('change', function () {
+            const category = this.value;
 
-                fetch(`{{ route('providers.index') }}?category=${category}`, {
+            fetch(`{{ route('providers.index') }}?category=${category}`, {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('providerTable').innerHTML = data.html;
+                });
+        });
+
+        document.addEventListener('click', function (e) {
+            if (e.target.matches('.pagination a')) {
+                e.preventDefault();
+                const url = e.target.href;
+                fetch(url, {
                     headers: { 'X-Requested-With': 'XMLHttpRequest' }
                 })
                     .then(response => response.json())
                     .then(data => {
                         document.getElementById('providerTable').innerHTML = data.html;
                     });
-            });
-
-            // Handle pagination via delegation
-            document.addEventListener('click', function (e) {
-                if (e.target.matches('.pagination a')) {
-                    e.preventDefault();
-                    const url = e.target.href;
-                    fetch(url, {
-                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            document.getElementById('providerTable').innerHTML = data.html;
-                        });
-                }
-            });
-        </script>
-    </div>
+            }
+        });
+    </script>
 @endsection
